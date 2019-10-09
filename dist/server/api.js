@@ -6,7 +6,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
-var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
@@ -27,6 +27,10 @@ var _archive = require("./archive");
 var _auth = require("./auth");
 
 var _streamLoader = require("./stream-loader");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var app = (0, _express["default"])();
 var db = new _db.Database();
@@ -88,8 +92,8 @@ function () {
 
           case 4:
             user = _context.sent;
-            newUser = (0, _objectSpread2["default"])({}, user, req.body);
-            _context.next = 8;
+            newUser = _objectSpread({}, user, {}, req.body);
+            _context.next = 7;
             return db.updateUser(newUser);
 
           case 8:
@@ -128,8 +132,13 @@ function () {
 
           case 3:
             user = _context2.sent;
+<<<<<<< HEAD
             newUser = (0, _objectSpread2["default"])({}, user, req.body);
             _context2.next = 7;
+=======
+            newUser = _objectSpread({}, user, {}, req.body);
+            _context2.next = 8;
+>>>>>>> fix travis break after a build
             return db.updateUser(newUser);
 
           case 7:
@@ -368,7 +377,8 @@ app.get('/search/:searchId', function (req, res) {
 app.put('/search/:searchId', function (req, res) {
   if (req.user) {
     db.getSearch(req.body.id).then(function (search) {
-      var newSearch = (0, _objectSpread2["default"])({}, search, req.body);
+      var newSearch = _objectSpread({}, search, {}, req.body);
+
       db.updateSearch(newSearch).then(function () {
         if (req.query.refreshTweets) {
           db.importFromSearch(search);
